@@ -1,15 +1,7 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from '../common/base.entity';
 @Entity('users')
-export class UserEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-
+export class UserEntity extends BaseEntity {
   @Column({
     type: 'varchar',
     name: 'user_name',
@@ -30,8 +22,4 @@ export class UserEntity {
   followeeCount!: number;
   @Column({ type: 'boolean', name: 'varified', default: false })
   varified!: boolean;
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt!: Date;
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt!: Date;
 }

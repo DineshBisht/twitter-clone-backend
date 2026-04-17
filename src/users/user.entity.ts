@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../common/base.entity';
+import { PostEntity } from 'src/posts/post.entity';
 @Entity('users')
 export class UserEntity extends BaseEntity {
   @Column({
@@ -22,4 +23,7 @@ export class UserEntity extends BaseEntity {
   followeeCount!: number;
   @Column({ type: 'boolean', name: 'varified', default: false })
   varified!: boolean;
+  @ManyToOne(() => PostEntity, (post) => post.author)
+  @JoinColumn({ name: 'posts' })
+  posts!: PostEntity[];
 }

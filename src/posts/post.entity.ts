@@ -1,5 +1,6 @@
 import { BaseEntity } from 'src/common/base.entity';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { UserEntity } from 'src/users/user.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 @Entity('posts')
 export class PostEntity extends BaseEntity {
   @Column({ type: 'varchar', name: 'text', length: 240, nullable: true })
@@ -10,6 +11,10 @@ export class PostEntity extends BaseEntity {
 
   @Column({ type: 'int', name: 'like_count', default: 0 })
   likeCount!: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.posts, { eager: true })
+  @JoinColumn({ name: 'author_id' })
+  author!: UserEntity;
 
   @Column({ type: 'int', name: 'repost_count', default: 0 })
   repostCount!: number;

@@ -9,6 +9,6 @@ export class UsersService {
     private readonly userRepository: UserRepository,
   ) {}
   getUserByUsername(username: string): Promise<UserEntity | null> {
-    return this.userRepository.findOne(username);
+    return this.userRepository.findOne({ name: username });
   }
 }

@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-// import { AppController } from './app.controller';
 import { AppService } from './app.service';
-// import { UsersController } from './users/users.controller';
-// import { PostsController } from './posts/posts.controller';
-// import { HashtagsController } from './hashtags/hashtags.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
+import { PostsModule } from './posts/posts.module';
+import { HashtagsModule } from './hashtags/hashtags.module';
 
 @Module({
   imports: [
@@ -23,6 +21,8 @@ import { UsersModule } from './users/users.module';
       logging: 'all',
     }),
     UsersModule,
+    PostsModule,
+    HashtagsModule,
   ],
   providers: [AppService, UsersService],
 })

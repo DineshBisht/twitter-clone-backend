@@ -34,10 +34,10 @@ export class BaseRepository<
     if (!entity) throw new Error('Entity not found.');
     await this.entityManager.remove(entity);
   }
-  async findOne(id: string): Promise<T> {
+  async findOne(condition: any): Promise<T> {
     const entity = await this.entityManager.findOne(this.entity, {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      where: { id } as any,
+      where: condition,
     });
     if (!entity) throw new Error('Entity not found.');
     return entity;

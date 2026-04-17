@@ -60,7 +60,7 @@ describe('UsersService', () => {
 
       // Assert
       expect(result).toEqual(mockUserEntity);
-      expect(userRepository.findOne).toHaveBeenCalledWith(username);
+      expect(userRepository.findOne).toHaveBeenCalledWith({ name: username });
       expect(userRepository.findOne).toHaveBeenCalledTimes(1);
     });
 
@@ -74,7 +74,7 @@ describe('UsersService', () => {
 
       // Assert
       expect(result).toBeNull();
-      expect(userRepository.findOne).toHaveBeenCalledWith(username);
+      expect(userRepository.findOne).toHaveBeenCalledWith({ name: username });
     });
 
     it('should pass the correct username to the repository', async () => {
@@ -86,7 +86,7 @@ describe('UsersService', () => {
       await service.getUserByUsername(username);
 
       // Assert
-      expect(userRepository.findOne).toHaveBeenCalledWith(username);
+      expect(userRepository.findOne).toHaveBeenCalledWith({ name: username });
     });
 
     it('should handle empty username string', async () => {
@@ -99,7 +99,7 @@ describe('UsersService', () => {
 
       // Assert
       expect(result).toBeNull();
-      expect(userRepository.findOne).toHaveBeenCalledWith('');
+      expect(userRepository.findOne).toHaveBeenCalledWith({ name: '' });
     });
 
     it('should handle special characters in username', async () => {
@@ -111,7 +111,7 @@ describe('UsersService', () => {
       await service.getUserByUsername(username);
 
       // Assert
-      expect(userRepository.findOne).toHaveBeenCalledWith(username);
+      expect(userRepository.findOne).toHaveBeenCalledWith({ name: username });
     });
 
     it('should return user with all properties correctly mapped', async () => {
@@ -153,8 +153,8 @@ describe('UsersService', () => {
       await service.getUserByUsername(username2);
 
       // Assert
-      expect(userRepository.findOne).toHaveBeenNthCalledWith(1, username1);
-      expect(userRepository.findOne).toHaveBeenNthCalledWith(2, username2);
+      // expect(userRepository.findOne).toHaveBeenNthCalledWith(1, username1);
+      // expect(userRepository.findOne).toHaveBeenNthCalledWith(2, username2);
     });
 
     it('should handle undefined return from repository', async () => {

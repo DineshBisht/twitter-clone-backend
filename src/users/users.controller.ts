@@ -3,6 +3,7 @@ import {
   Delete,
   Get,
   Inject,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -16,16 +17,23 @@ export class UsersController {
   constructor(
     @Inject(UsersService) private readonly usersService: UsersService,
   ) {}
-  @Get('/:userId')
-  getUserByUserId(@Param('userId') userId: string): string {
-    return 'getUserByUserId ' + userId;
-  }
+  // @Get('/:userId')
+  // getUserByUserId(@Param('userId') userId: string): string {
+  //   return 'getUserByUserId ' + userId;
+  // }
 
-  @Get('/username')
-  getUserByUsername(
+  @Get('/@:username')
+  async getUserByUsername(
     @Param('username') username: string,
   ): Promise<UserEntity | null> {
-    return this.usersService.getUserByUsername(username);
+    return this.usersService.getUserByUsername(username).catch((error) => {
+      if (error === 'Entity not found.') {
+        throw new NotFoundException(
+          'User not found with username: ' + username,
+        );
+      }
+      throw error;
+    });
   }
 
   @Post('/')

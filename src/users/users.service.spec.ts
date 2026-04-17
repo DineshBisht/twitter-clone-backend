@@ -5,7 +5,7 @@ import { UserEntity } from './user.entity';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let userRepository: jest.Mocked<UserRepository>;
+  let userRepository: UserRepository;
 
   const mockUserEntity: UserEntity = {
     id: '1',
@@ -38,7 +38,7 @@ describe('UsersService', () => {
     }).compile();
 
     service = module.get<UsersService>(UsersService);
-    userRepository = module.get(UserRepository) as jest.Mocked<UserRepository>;
+    userRepository = module.get(UserRepository);
   });
 
   afterEach(() => {
@@ -108,7 +108,7 @@ describe('UsersService', () => {
       userRepository.findOne.mockResolvedValue(null);
 
       // Act
-      const result = await service.getUserByUsername(username);
+      await service.getUserByUsername(username);
 
       // Assert
       expect(userRepository.findOne).toHaveBeenCalledWith(username);

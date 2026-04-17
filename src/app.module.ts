@@ -5,6 +5,7 @@ import { UsersController } from './users/users.controller';
 import { PostsController } from './posts/posts.controller';
 import { HashtagsController } from './hashtags/hashtags.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersService } from './users/users.service';
 
 @Module({
   imports: [
@@ -27,6 +28,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     PostsController,
     HashtagsController,
   ],
-  providers: [AppService],
+  providers: [AppService, UsersService],
 })
 export class AppModule {}

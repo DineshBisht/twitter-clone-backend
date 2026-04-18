@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { BaseEntity } from '../common/base.entity';
 import { PostEntity } from 'src/posts/post.entity';
+import { PasswordEntity } from 'src/auth/password.entity';
 @Entity('users')
 export class UserEntity extends BaseEntity {
   @Column({
@@ -26,4 +27,9 @@ export class UserEntity extends BaseEntity {
   @ManyToOne(() => PostEntity, (post) => post.author)
   @JoinColumn({ name: 'posts' })
   posts!: PostEntity[];
+
+  @OneToOne(() => PasswordEntity, (password) => password.user, {
+    cascade: true,
+  })
+  password!: PasswordEntity;
 }

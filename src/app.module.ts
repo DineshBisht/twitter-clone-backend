@@ -5,6 +5,7 @@ import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { HashtagsModule } from './hashtags/hashtags.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { HashtagsModule } from './hashtags/hashtags.module';
     UsersModule,
     PostsModule,
     HashtagsModule,
+    AuthModule,
   ],
   providers: [AppService, UsersService],
 })

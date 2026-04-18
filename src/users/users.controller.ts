@@ -13,11 +13,13 @@ import {
 import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dtos/createUser.dto';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('users')
 export class UsersController {
   constructor(
     @Inject(UsersService) private readonly usersService: UsersService,
+    private readonly authService: AuthService,
   ) {}
   // @Get('/:userId')
   // getUserByUserId(@Param('userId') userId: string): string {
@@ -39,8 +41,15 @@ export class UsersController {
   }
 
   @Post('/')
-  createUser(@Body() createUserDto: CreateUserDto): Promise<UserEntity> {
-    return this.usersService.createUser(createUserDto);
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<UserEntity> {
+    const user = await this.usersService.createUser(createUserDto);
+    if (user) {
+      await this.authService.savePassword({
+        user: user,
+        password: await this.authService.hashPassword(createUserDto.userName),
+      });
+    }
+    return user;
   }
 
   @Patch('/:userId')
